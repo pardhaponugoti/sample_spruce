@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+  </head>
+  <body>
+
+    <div>
+      <h1>Links to install</h1>
+      <ul>
+        <li><a href="http://www.google.com">Google (should push)</a></li>
+        <li><a href="http://www.yahoo.com">Yahoo (should not push - takes 2 seconds to load)</a></li>
+      </ul>
+
+    <div id="debug">Debug:</div>
+
+    <script type="text/javascript">
+
+      var _lrc = _lrc || [];
+      _lrc.push(['subdomain', location.hostname.indexOf("amazonaws.com") > 0 ? 'cdn' : 'local']);
+      _lrc.push(['path', location.pathname.substring(0,location.pathname.lastIndexOf('/')) + '/redir.html']);
+      _lrc.push(['port', location.port]);
+
+      _lrc.push(['privacy_style', 'border: none;border-left:2px solid #c00; background-color: #efefef;']);
+      _lrc.push(['privacy_header_style', 'background-color: #c00; border: none;']);
+      _lrc.push(['privacy_message_style', 'background-color: #efefef; border: none;']);
+
+      _lrc.push(['debug', true]);
+//      _lrc.push(['safari', true]);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript';
+        //ga.src = '//cdn.rlcdn.com/js/ga.js?' + new Date().getTime();
+        //ga.src = '//cdn.rlcdn.com.s3.amazonaws.com/test/attribution/ga.js?' + new Date().getTime();
+        ga.src = 'fp.js?' + new Date().getTime();
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var redirLinks = [];
+        var hasInternalHash = function (link) {
+          if (link.href.indexOf('#') === -1)
+              return false;
+          if (link.host !== location.host)
+              return false;
+          if (link.pathname !== location.pathname)
+              return false;
+          return true;
+        }
+
+        for (var i = 0; i < links.length; ++i) {
+          var link = links[i];
+          if (link.onclick)
+              continue;
+          if (hasInternalHash(link))
+              continue;
+          if (link.dataset.hasOwnProperty('noFp'))
+              continue;
+
+          var url = "/redir?cookieKey=testCookieKey&cookieValue=testCookieValue&redirectTo=" + encodeURIComponent(link.href)
+          redirLinks.push(url)
+        }
+
+        function arrayToQueryString(inputArray, name) {
+          return '?' +
+            inputArray.map(function(element) {
+              return name + '=' + encodeURIComponent(element);
+            }).join('&');
+        }
+
+
+        function createCORSRequest(method, url) {
+          var xhr = new XMLHttpRequest();
+          if ("withCredentials" in xhr) {
+            console.log("hasCredentials");
+
+            // Check if the XMLHttpRequest object has a "withCredentials" property.
+            // "withCredentials" only exists on XMLHTTPRequest2 objects.
+            xhr.open(method, url, true);
+
+          } else if (typeof XDomainRequest != "undefined") {
+
+            // Otherwise, check if XDomainRequest.
+            // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+            xhr = new XDomainRequest();
+            xhr.open(method, url);
+
+          } else {
+
+            // Otherwise, CORS is not supported by the browser.
+            xhr = null;
+
+          }
+          return xhr;
+        }
+
+        var url = "https://http2poc.pippio.com/links" + arrayToQueryString(redirLinks, "redirLinks")
+        var x = createCORSRequest('GET', url);
+        x.onload = function() {
+         var responseText = x.responseText;
+         console.log(responseText);
+         // process the response.
+        };
+        x.onerror = function() {
+          console.log('There was an error!');
+        };
+        x.withCredentials = true;
+        x.send();
+
+        // links.filter( (link) => { regex(arbor) })
+        // // send link to url that returns a hash of link -> response: response, redirect: newLink
+        // links.each ( (link) => {
+        //   link.response
+        //   link.href = hashedLink
+        // })
+      })()
+
+    </script>
+
+  </body>
+</html>
