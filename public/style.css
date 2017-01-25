@@ -1,27 +1,27 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
 @font-face {
   font-family: 'Flexo';
-  src: url(/public/fonts/Flexo-Thin.otf) format("truetype");
+  src: url(/sample_spruce/public/fonts/Flexo-Thin.otf) format("truetype");
   font-weight: 100; }
 
 @font-face {
   font-family: 'Flexo';
-  src: url(/public/fonts/Flexo-Light.otf) format("truetype");
+  src: url(/sample_spruce/public/fonts/Flexo-Light.otf) format("truetype");
   font-weight: 200; }
 
 @font-face {
   font-family: 'Flexo';
-  src: url(/public/fonts/Flexo-Regular.otf) format("truetype");
+  src: url(/sample_spruce/public/fonts/Flexo-Regular.otf) format("truetype");
   font-weight: 300; }
 
 @font-face {
   font-family: 'Flexo';
-  src: url(/public/fonts/Flexo-Medium.otf) format("truetype");
+  src: url(/sample_spruce/public/fonts/Flexo-Medium.otf) format("truetype");
   font-weight: 400; }
 
 @font-face {
   font-family: 'Flexo';
-  src: url(/public/fonts/Flexo-Bold.otf) format("truetype");
+  src: url(/sample_spruce/public/fonts/Flexo-Bold.otf) format("truetype");
   font-weight: 500; }
 
 h1 {
@@ -56,7 +56,7 @@ p {
 
 .wrapper {
   transform: scale(1.01);
-  background-image: url('/public/images/wallpaper.svg');
+  background-image: url('/sample_spruce/public/images/wallpaper.svg');
   background-size: cover;
   background-repeat:no-repeat;
   background-position:center;
