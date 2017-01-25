@@ -51,6 +51,7 @@
         document.getElementById('clear-cookies-button').addEventListener('click', function() {
           clearCookies();
           showCookies();
+          location.reload();
         });
         document.getElementById('refresh-cookies-button').addEventListener('click', function() {
           showCookies();
