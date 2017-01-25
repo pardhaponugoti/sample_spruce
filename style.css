@@ -66,10 +66,6 @@ a {
   text-align: center;
 }
 
-#links.pushed a {
-  background-color: blue;
-}
-
 #clear-cookies-button, #refresh-cookies-button {
   display: inline-block;
   width: 150px;
