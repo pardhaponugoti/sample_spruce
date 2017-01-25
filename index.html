@@ -42,7 +42,7 @@
           var expires = 'expires=Thu, 05 Oct 1990 00:00:01 GMT;'
           for (var i=0; i<cookies.length; i++) {
             var cookie = cookies[i];
-            document.cookie = cookie.split('=')[0] + '=; ' + expires;
+            document.cookie = cookie.split('=')[0] + '=; ' + expires + '; path=/';
           }
         };
 
