@@ -2,30 +2,79 @@
 <html>
   <head>
     <meta charset="UTF-8"/>
+     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
+    <!-- for hackweek demo -->
 
-    <div>
-      <h1>Links to install</h1>
-      <ul>
-        <li><a href="http://www.google.com">Google (should push)</a></li>
-        <li><a href="http://www.yahoo.com">Yahoo (should not push - takes 2 seconds to load)</a></li>
-      </ul>
+    <h1>Cool Publisher</h1>
 
-    <div id="debug">Debug:</div>
+    <div id="links">
+      <h4>Cool Links</h4>
+      <a href="http://www.google.com">Google (with server push)</a>
+      <a href="http://www.yahoo.com">Yahoo (no server push)</a>
+    </div>
+
+    <h4 id="cookies-title">Cookies</h4>
+    <div id="cookie-container"></div>
+    <div id="cookie-buttons">
+      <a href="#" id="refresh-cookies-button">Refresh</a>
+      <a href="#" id="clear-cookies-button">Clear</a>
+    </div>
+
+    <script type="text/javascript">
+      (function() {
+
+        function showCookies() {
+          var cookies = document.cookie.split(';');
+          var container = document.getElementById('cookie-container');
+          container.innerHTML = '';
+          for (var i = 0; i < cookies.length; ++i) {
+            var cookie = document.createElement('div');
+            cookie.className = 'cookie'
+            cookie.innerHTML = cookies[i];
+            container.appendChild(cookie);
+          }
+        };
+
+        function clearCookies() {
+          var date = new Date(); date.setTime(date.getTime() - 1);
+          var cookies = document.cookie.split(';');
+          for (var i=0; i<cookies.length; i++) {
+            var cookie = cookies[i];
+            document.cookie = cookie + '; expires=' + date.toGMTString();
+          }
+        };
+
+        showCookies();
+
+        document.getElementById('clear-cookies-button').addEventListener('click', function() {
+          clearCookies();
+          showCookies();
+        });
+        document.getElementById('refresh-cookies-button').addEventListener('click', function() {
+          showCookies();
+        });
+      })();
+    </script>
+
+
+
+
+    <!-- <div id="debug">Debug:</div> -->
 
     <script type="text/javascript">
 
       var _lrc = _lrc || [];
-      _lrc.push(['subdomain', location.hostname.indexOf("amazonaws.com") > 0 ? 'cdn' : 'local']);
-      _lrc.push(['path', location.pathname.substring(0,location.pathname.lastIndexOf('/')) + '/redir.html']);
-      _lrc.push(['port', location.port]);
+      // _lrc.push(['subdomain', location.hostname.indexOf("amazonaws.com") > 0 ? 'cdn' : 'local']);
+      // _lrc.push(['path', location.pathname.substring(0,location.pathname.lastIndexOf('/')) + '/redir.html']);
+      // _lrc.push(['port', location.port]);
 
-      _lrc.push(['privacy_style', 'border: none;border-left:2px solid #c00; background-color: #efefef;']);
-      _lrc.push(['privacy_header_style', 'background-color: #c00; border: none;']);
-      _lrc.push(['privacy_message_style', 'background-color: #efefef; border: none;']);
+      // _lrc.push(['privacy_style', 'border: none;border-left:2px solid #c00; background-color: #efefef;']);
+      // _lrc.push(['privacy_header_style', 'background-color: #c00; border: none;']);
+      // _lrc.push(['privacy_message_style', 'background-color: #efefef; border: none;']);
 
-      _lrc.push(['debug', true]);
+      // _lrc.push(['debug', true]);
 //      _lrc.push(['safari', true]);
 
       (function() {
@@ -100,6 +149,7 @@
         x.onload = function() {
          var responseText = x.responseText;
          console.log(responseText);
+         document.getElementById('links').className = 'pushed';
          // process the response.
         };
         x.onerror = function() {
