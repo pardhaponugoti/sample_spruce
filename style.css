@@ -1,7 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);/******************************* Component SASS files *******************************/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
 
-/******************************* COLORS *******************************/
-/******************************* HEADERS *******************************/
 h1 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
